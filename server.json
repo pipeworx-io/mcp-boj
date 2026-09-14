@@ -1,0 +1,18 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.pipeworx-io/boj",
+  "title": "Boj",
+  "description": "Bank of Japan (BOJ) / Japan monetary MCP. Keyless.",
+  "version": "0.1.0",
+  "websiteUrl": "https://pipeworx.io/packs/boj",
+  "repository": {
+    "url": "https://github.com/pipeworx-io/mcp-boj",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://gateway.pipeworx.io/boj/mcp"
+    }
+  ]
+}
