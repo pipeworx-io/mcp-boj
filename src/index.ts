@@ -757,15 +757,37 @@ async function callTool(name: string, args: Record<string, unknown>): Promise<un
       const { points } = await fetchSeries('IMF/IFS/M.JP.FPOLM_PA');
       if (points.length === 0) throw new Error('No BOJ policy-rate observations returned.');
       const latest = points[points.length - 1];
+      // points is oldest->newest (fetchSeries preserves DBnomics' period order).
+      // Walk forward and record each point where the rate changes — the
+      // "current + effective_since + previous" shape, computed from the same
+      // series already fetched, rather than left for the caller to infer a
+      // decision month from a bare history array (fleet #3206).
+      const changes: { rate: number; effective_since: string }[] = [{ rate: points[0].value, effective_since: points[0].period }];
+      for (let i = 1; i < points.length; i++) {
+        if (points[i].value !== changes[changes.length - 1].rate) {
+          changes.push({ rate: points[i].value, effective_since: points[i].period });
+        }
+      }
+      const current = changes[changes.length - 1];
+      const previous = changes.length > 1 ? changes[changes.length - 2] : null;
       return {
+        rate: current.rate,
+        unit: 'percent per annum',
+        effective_since: current.effective_since,
+        previous_rate: previous?.rate ?? null,
+        previous_rate_effective_since: previous?.effective_since ?? null,
+        decision_history: changes.slice(-5).reverse(),
+        data_as_of: latest.period,
         indicator: 'Bank of Japan policy interest rate',
         country: 'Japan',
-        unit: 'percent per annum',
         current: { rate_pct: latest.value, month: latest.period },
         history: tail(points, months),
         frequency: 'monthly',
         source: 'IMF International Financial Statistics (M.JP.FPOLM_PA) via DBnomics',
-        note: 'Official BOJ policy rate. Monthly series; latest month lags the current date by the IMF release cadence.',
+        note:
+          'Official BOJ policy rate. Monthly series; the IMF release cadence lags the current date by over a ' +
+          'year, so effective_since/previous_rate reflect the last change VISIBLE in this series, which may be ' +
+          'behind the live BOJ rate if it changed very recently.',
       };
     }
     case 'boj_inflation': {
