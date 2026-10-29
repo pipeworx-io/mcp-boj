@@ -1,0 +1,28 @@
+[
+  {
+    "name": "boj_policy_rate",
+    "description": "The Bank of Japan's current policy interest rate for JAPAN (the BOJ short-term policy rate / Monetary Policy-Related Interest Rate, % per annum). Returns the latest value, its month, and recent monthly history. Use this for any 'Bank of Japan interest rate' / 'BOJ rate' / 'Japan policy rate' question. Sourced from IMF IFS (keyless). As of mid-2026 the rate is 0.5% (BOJ exited negative rates in 2024 and hiked to 0.5% in Jan 2025).",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "months": {
+          "type": "number",
+          "description": "How many recent months of history to return (default 12)."
+        }
+      }
+    }
+  },
+  {
+    "name": "boj_inflation",
+    "description": "Japan's consumer price inflation (CPI, all items) — the metric the Bank of Japan targets at 2%. Returns the latest year-on-year inflation rate (%), the latest CPI index level, their month, and recent monthly history. Use for 'Japan inflation rate' / 'Japan CPI' / 'is Japan hitting the BOJ 2% target' questions. Sourced from IMF IFS (keyless).",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "months": {
+          "type": "number",
+          "description": "How many recent months of history to return (default 12)."
+        }
+      }
+    }
+  }
+]
