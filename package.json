@@ -1,6 +1,6 @@
 {
   "name": "@pipeworx/mcp-boj",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Bank of Japan (BOJ) / Japan monetary MCP. Keyless.",
   "type": "module",
   "main": "lib/index.js",
@@ -27,7 +27,7 @@
     "mode": "gateway",
     "slug": "boj",
     "gatewaySlug": "boj",
-    "sourceHash": "v1-0bb7e4e687b5640e8f47e03f83028e590c70305ff3988b47c6f6fe343e39f6fa",
-    "sourceCommit": "4277282d72f9bf55e548b3799aaf737baf22152f"
+    "sourceHash": "v1-82cc704a6727420e1ac872a82af4390e910ec93e7dfa2e9b1b8cd63bb140ccd6",
+    "sourceCommit": "547a3983b42dacf4389ca474860b0a1dee8e6053"
   }
 }
